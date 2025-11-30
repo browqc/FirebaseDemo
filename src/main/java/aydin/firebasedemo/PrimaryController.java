@@ -25,7 +25,8 @@ import javafx.scene.control.TextField;
 public class PrimaryController {
     @FXML
     private TextField ageTextField;
-
+    @FXML
+    private TextField phoneTextField;
     @FXML
     private TextField nameTextField;
 
@@ -72,10 +73,21 @@ public class PrimaryController {
 
 
     @FXML
-    void writeButtonClicked(ActionEvent event) {
-        addData();
-    }
+    public void writeButtonClicked() {
+        String name = nameTextField.getText();
+        String phone = phoneTextField.getText();
+        int age = Integer.parseInt(ageTextField.getText());
 
+        Person p = new Person(name, age, phone);
+
+        // when building your Firestore data map:
+        Map<String, Object> data = new HashMap<>();
+        data.put("name", p.getName());
+        data.put("age", p.getAge());
+        data.put("phone", p.getPhone());  // NEW
+
+        // ... then send to Firestore like before
+    }
     @FXML
     private void switchToSecondary() throws IOException {
         DemoApp.setRoot("secondary");
